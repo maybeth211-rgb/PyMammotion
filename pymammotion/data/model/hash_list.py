@@ -223,7 +223,9 @@ class HashList(DataClassORJSONMixin):
         self.obstacle = {hash_id: frames for hash_id, frames in self.obstacle.items() if hash_id in hashlist}
         self.dump = {hash_id: frames for hash_id, frames in self.dump.items() if hash_id in hashlist}
         self.svg = {hash_id: frames for hash_id, frames in self.svg.items() if hash_id in hashlist}
-        self.visual_safety_zone = {hash_id: frames for hash_id, frames in self.visual_safety_zone.items() if hash_id in hashlist}
+        self.visual_safety_zone = {
+            hash_id: frames for hash_id, frames in self.visual_safety_zone.items() if hash_id in hashlist
+        }
 
         area_hashes = list(self.area.keys())
         for hash_id, plan_task in self.plan.copy().items():
@@ -365,7 +367,7 @@ class HashList(DataClassORJSONMixin):
         if hash_data.type == PathType.AREA and isinstance(hash_data, NavGetCommData):
             existing_name = next((area for area in self.area_name if area.hash == hash_data.hash), None)
             if not existing_name:
-                name = f"area {len(self.area_name)+1}"
+                name = f"area {len(self.area_name) + 1}"
                 self.area_name.append(AreaHashNameList(name=name, hash=hash_data.hash))
             result = self._add_hash_data(self.area, hash_data)
             self.update_hash_lists(self.hashlist)
